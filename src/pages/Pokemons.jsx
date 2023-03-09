@@ -1,44 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useApiContext } from '../context/UseApiContext';
 
 import Nav from '../components/Nav';
 
 const Pokemons = () => {
-  const [JSONPokemons, setJSONPokemons] = useState([]);
-  const [selectedPokemonIndex, setSelectedPokemonIndex] = useState(0);
-  const [urlSelected, setUrlSelected] = useState('');
-  const navigate = useNavigate();
-
-  const getData = async () => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/');
-    const data = await res.json();
-
-    setJSONPokemons(data.results);
-  };
-
-  const getUrlSelected = async () => {
-    const res = await fetch(urlSelected);
-    const data = await res.json();
-
-    setJSONPokemons(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const handleSelectChange = e => {
-    const index = e.target.value;
-    setSelectedPokemonIndex(index);
-  };
-
-  const handleDetailsClick = () => {
-    const selectedPokemon = JSONPokemons[selectedPokemonIndex];
-    const pokemonNumber = selectedPokemon.url.split('/').slice(-2, -1);
-    setUrlSelected(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`);
-    getUrlSelected();
-    navigate(`/pokemons/${pokemonNumber}`);
-  };
+  const {
+    JSONPokemons,
+    handleSelectChange,
+    handleDetailsClick,
+    selectedPokemonIndex,
+  } = useApiContext();
 
   return (
     <>

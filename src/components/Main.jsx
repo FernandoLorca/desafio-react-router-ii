@@ -1,18 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useApiContext } from '../context/UseApiContext';
 
 const Main = () => {
-  const [JSONMain, setJSONMain] = useState([]);
-
-  const getData = async () => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon-form/20/');
-    const data = await res.json();
-
-    setJSONMain([data]);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { JSONMain } = useApiContext();
 
   return (
     <div className="bg-slate-100 h-screen flex flex-col justify-center items-center">
